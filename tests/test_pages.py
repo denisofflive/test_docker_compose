@@ -1,11 +1,14 @@
 import time
 
+import pytest
+
 from base.base_test import BaseTest
 
 class TestPages(BaseTest):
 
     # Поставил timesleep, чтобы можно было посмотреть не так быстро? как отрабатывают тесты
 
+    @pytest.mark.t
     def test_click_on_pages(self):
         self.crm_page.open()
         time.sleep(1)

@@ -1,15 +1,12 @@
 version: "3.7" # Версия Docker Compose файла
 services: # Описание микросервисов (контейнеров)
   regression: # Имя контейнера (по умолчанию добавится -1)
-    image: ui:v1 # Базовый образ для контейнера (если такого нет, соберется из докерфайла)
+    image: chrome:v2 # Базовый образ для контейнера (если такого нет, соберется из докерфайла)
     build: # Инструкции для сборки образа, если он не найден
       context: . # Контекст сборки (текущая директория)
       dockerfile: Dockerfile # Имя Dockerfile
     volumes: # Тома для монтирования
-      - ./:/usr/workspace
-    command: /bin/sh -c "STAGE=$$STAGE pytest -sv -o log_cli=true -m=$$SUITE --alluredir=report" # Команда для выполнения в контейнере
-    environment: # Переменные окружения
-      STAGE: ${STAGE:-dev}
-      SUITE: ${SUITE:-regression}
-      THREADS: ${THREADS:-4}
+      - ./:/app #  Папка на виртуалке
+    command: /bin/sh -c "pytest -sv -o log_cli=true --alluredir=report" # Команда для выполнения в контейнере
+
     tty: true # Для цветного вывода логов
